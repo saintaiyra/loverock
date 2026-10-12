@@ -95,7 +95,7 @@ export default function Preloader() {
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-[9999] flex h-[100dvh] w-full flex-col items-center justify-center overflow-hidden bg-[#080808] px-6 text-[#F4F0E9]"
+      className="fixed inset-0 z-9999 flex h-dvh w-full flex-col items-center justify-center overflow-hidden bg-[#080808] px-6 text-[#F4F0E9]"
       role="status"
       aria-label={`Carregando experiência Saint Lovers: ${progress}%`}
     >
