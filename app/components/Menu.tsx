@@ -12,7 +12,7 @@ interface MenuProps {
 
 const menuItems = [
   { label: "Home", href: "#home" },
-  { label: "Projects", href: "#projects" },
+  { label: "GitHub", href: "#github" },
   { label: "Sketchbook", href: "#sketchbook" },
   { label: "Music", href: "#music" },
   { label: "Contact", href: "#contact" },
