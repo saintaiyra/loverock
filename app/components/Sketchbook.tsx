@@ -10,7 +10,7 @@ export default function Sketchbook() {
   return (
     <section
       id="sketchbook"
-      className="sl-transition relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-black px-4 py-6"
+      className="sl-transition relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-black px-4 py-90"
     >
       <div className="relative flex w-full max-w-4xl -translate-y-70 flex-col items-center justify-center">
         {/* Caderno fechado / aberto */}
