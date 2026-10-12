@@ -34,7 +34,6 @@ export default function Home() {
       <SectionTransitions>
         <Hero />
         <Lovehard />
-        <LogoCarousel />
         <Sketchbook/>
         <LogoCarousel />
         <Spirits />
