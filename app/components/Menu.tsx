@@ -22,17 +22,17 @@ const menuItems = [
   },
   {
     label: "Sketchbook",
-    href: "#sketchbook",
+    href: "https://www.instagram.com/lovxsaint/",
     external: false,
   },
   {
     label: "Music",
-    href: "https://open.spotify.com/",
+    href: "https://soundcloud.com/ssaintaiyra0666",
     external: true,
   },
   {
     label: "Contact",
-    href: "https://wa.me/5517999999999",
+    href: "https://wa.me/",
     external: true,
   },
 ];
