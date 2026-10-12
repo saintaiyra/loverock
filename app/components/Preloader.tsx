@@ -17,10 +17,7 @@ export default function Preloader() {
   // Verifica se o visitante já viu a introdução.
   useEffect(() => {
     try {
-      if (localStorage.getItem(STORAGE_KEY) === "true") {
-        setVisible(false);
-        return;
-      }
+      
     } catch {
       // Se o armazenamento estiver indisponível,
       // o preloader continua funcionando nesta visita.
@@ -48,7 +45,7 @@ export default function Preloader() {
       const timeline = gsap.timeline({
         onComplete: () => {
           try {
-            localStorage.setItem(STORAGE_KEY, "true");
+            
           } catch {
             // Sem armazenamento, poderá aparecer novamente.
           }
