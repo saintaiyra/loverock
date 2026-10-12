@@ -1,26 +1,230 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+body {
+  background: black;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+
+.sl-sketchbook {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100svh;
+  padding: 100px 24px;
+  overflow: hidden;
+  background: #050505;
+  color: #f5f0e8;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.sl-book-scene {
+  width: min(100%, 900px);
+  perspective: 1800px;
+  perspective-origin: center;
+}
+
+.sl-book {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.35 / 1;
+  transform-style: preserve-3d;
+}
+
+.sl-book-pages {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  border-radius: 5px;
+  background: #d8d0c0;
+  box-shadow: 0 20px 70px #000b;
+}
+
+.sl-page {
+  position: relative;
+  min-width: 0;
+  padding: clamp(12px, 3vw, 35px);
+  overflow: hidden;
+  color: #181713;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      #00000005 0px,
+      #00000005 1px,
+      transparent 1px,
+      transparent 5px
+    ),
+    #e8e1d4;
+}
+
+.sl-page-left {
+  border-right: 1px solid #a49a89;
+}
+
+.sl-page-right {
+  background-color: #dcd4c7;
+}
+
+.sl-page-number {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font: 10px monospace;
+  opacity: 0.6;
+}
+
+.sl-page-content {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sl-page-content h3 {
+  font-size: clamp(9px, 1.3vw, 15px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.sl-image-frame {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: #bdb4a5;
+}
+
+.sl-page-image,
+.sl-cover-image {
+  object-fit: cover;
+}
+
+.sl-page-content p {
+  font-size: clamp(9px, 1.15vw, 13px);
+  line-height: 1.5;
+}
+
+.sl-handwriting {
+  font-family: cursive;
+  font-size: clamp(10px, 1.4vw, 16px);
+  transform: rotate(-3deg);
+}
+
+.sl-book-cover {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  overflow: hidden;
+  border: 1px solid #514a3e;
+  border-radius: 5px;
+  background: #24231f;
+  cursor: pointer;
+  transform-origin: left center;
+  transform: rotateY(0deg);
+  transition: transform 850ms cubic-bezier(.2, .7, .2, 1);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.sl-cover-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+}
+
+.sl-cover-title,
+.sl-open-label {
+  position: relative;
+  z-index: 1;
+  padding: 8px 12px;
+  background: #111c;
+  color: white;
+  text-align: center;
+}
+
+.sl-cover-title {
+  font-size: clamp(18px, 3vw, 38px);
+  letter-spacing: 0.12em;
+}
+
+.sl-open-label {
+  font-family: monospace;
+  font-size: clamp(10px, 1.5vw, 15px);
+  letter-spacing: 0.1em;
+}
+
+.sl-book.is-open .sl-book-cover {
+  transform: rotateY(-165deg);
+  pointer-events: none;
+}
+
+.sl-book-controls {
+  display: flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  font-family: monospace;
+  font-size: 11px;
+}
+
+.sl-book-controls button {
+  padding: 12px 8px;
+  color: #f5f0e8;
+  transition: opacity 200ms ease;
+}
+
+.sl-book-controls button:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .sl-sketchbook {
+    min-height: auto;
+    padding: 80px 14px;
+  }
+
+  .sl-book-scene {
+    width: 100%;
+  }
+
+  .sl-book {
+    aspect-ratio: 0.78 / 1;
+  }
+
+  .sl-book-pages {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .sl-page {
+    padding: 12px 8px;
+  }
+
+  .sl-page-content {
+    gap: 8px;
+  }
+
+  .sl-book-controls {
+    gap: 12px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (prefers-reduced-motion: reduce) {
+  .sl-book-cover {
+    transition-duration: 0.01ms;
+  }
 }
