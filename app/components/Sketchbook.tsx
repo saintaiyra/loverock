@@ -26,13 +26,13 @@ className="relative block w-[90%] cursor-pointer focus-visible:outline-2 focus-v
 
           {/* Capa fechada */}
           <Image
-            src="/sketchbook/sddpt2.png"
+            src="/sketchbook/close kill.png"
             alt="Capa do sketchbook Saint Lovers"
             width={1024}
             height={1536}
             priority
             draggable={false}
-            className={`h-140 w-full object-contain transition-all duration-200 ease-in-out ${
+            className={`h-100 w-full object-contain transition-all duration-200 ease-in-out ${
               isOpen
                 ? "pointer-events-none absolute inset-0 scale-95 opacity-0"
                 : "relative scale-100 opacity-100"
@@ -41,7 +41,7 @@ className="relative block w-[90%] cursor-pointer focus-visible:outline-2 focus-v
 
           {/* Caderno aberto */}
           <Image
-            src="/sketchbook/lovept2.png"
+            src="/sketchbook/for the world.png"
             alt="Sketchbook aberto com colagens, fotografias e poema"
             width={1536}
             height={1024}
