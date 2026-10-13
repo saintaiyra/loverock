@@ -228,3 +228,39 @@ body {
     transition-duration: 0.01ms;
   }
 }
+
+
+/* Saint Lovers — efeito de entrada das páginas */
+.magazine-page {
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  animation: magazine-page-enter 420ms ease-out both;
+}
+
+.magazine-page canvas {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+@keyframes magazine-page-enter {
+  from {
+    opacity: 0;
+    transform: perspective(1200px) rotateY(-8deg) translateX(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: perspective(1200px) rotateY(0deg) translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magazine-page {
+    animation: none;
+  }
+}

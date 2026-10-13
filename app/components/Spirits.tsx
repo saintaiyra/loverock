@@ -58,7 +58,7 @@ export default function Spirits() {
   return (
     <section
       ref={sectionRef}
-      className="sl-transition relative w-full overflow-hidden bg-black"
+      className="relative w-full overflow-hidden bg-black"
     >
       <div
         ref={trackRef}

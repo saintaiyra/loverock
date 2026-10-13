@@ -9,6 +9,7 @@ import Menu from "./components/Menu";
 import Hero from "./components/Hero";
 import Lovehard from "./components/Lovehard";
 import Sketchbook from "./components/Sketchbook";
+import VogueMagazine from "./components/VogueMagazine";
 import Spirits from "./components/Spirits";
 import Music from "./components/Music";
 import LogoCarousel from "./components/LogoCarousel";
@@ -35,9 +36,16 @@ export default function Home() {
         <Hero />
         <Lovehard />
         <Sketchbook/>
+        <VogueMagazine/>
+        </SectionTransitions>
+
+
+        
         <LogoCarousel />
         <Spirits />
         <LogoCarousel />
+
+        <SectionTransitions>
         <Music />
         <LogoCarousel />
       </SectionTransitions>

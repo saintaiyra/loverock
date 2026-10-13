@@ -29,7 +29,7 @@ export default function LogoCarousel() {
   }, []);
 
   return (
-    <section className="sl-transition w-full overflow-hidden border-y border-white/10 bg-black py-5">
+    <section className="w-full overflow-hidden border-y border-white/10 bg-black py-5">
       <div
         ref={trackRef}
         className="flex w-max items-center"
