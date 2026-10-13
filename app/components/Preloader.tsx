@@ -1,41 +1,26 @@
-
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
 
-const STORAGE_KEY = "saint-lovers-preloader-seen";
+const STORAGE_KEY = "saint-lovers-preloader-seen-v3";
+const PROGRESS_DURATION = 3500;
+const EXIT_DURATION = 850;
 
 export default function Preloader() {
-  // Visível no HTML inicial para cobrir a página antes da hidratação.
   const [visible, setVisible] = useState(true);
   const [progress, setProgress] = useState(0);
-
+  const [exiting, setExiting] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
-  const numberRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const overlay = overlayRef.current;
-    const progressBar = progressRef.current;
-    const number = numberRef.current;
     const siteContent = document.getElementById("site-content");
 
     const revealSite = () => {
       siteContent?.classList.remove("invisible");
+      siteContent?.classList.remove("opacity-0");
+      siteContent?.removeAttribute("aria-hidden");
     };
-
-    // Não repetir a introdução se ela já foi concluída.
-    try {
-      if (localStorage.getItem(STORAGE_KEY) === "true") {
-        revealSite();
-        setVisible(false);
-        return;
-      }
-    } catch {
-      // Se o armazenamento estiver indisponível,
-      // executa normalmente nesta visita.
-    }
 
     if (!overlay) {
       revealSite();
@@ -43,63 +28,66 @@ export default function Preloader() {
       return;
     }
 
-    const counter = { value: 0 };
+    try {
+      if (localStorage.getItem(STORAGE_KEY) === "true") {
+        revealSite();
+        setVisible(false);
+        return;
+      }
+    } catch {
+      // Continue even when localStorage is unavailable.
+    }
 
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    const ctx = gsap.context(() => {
-      gsap.set(overlay, {
-        yPercent: 0,
-        autoAlpha: 1,
-      });
+    const duration = reducedMotion ? 150 : PROGRESS_DURATION;
+    const startTime = performance.now();
+    let frameId = 0;
+    let exitTimer: ReturnType<typeof setTimeout> | undefined;
+    let finishTimer: ReturnType<typeof setTimeout> | undefined;
+    let cancelled = false;
 
-      const timeline = gsap.timeline({
-        onComplete: () => {
+    const animateProgress = (now: number) => {
+      if (cancelled) return;
+
+      const elapsed = now - startTime;
+      const nextProgress = Math.min(100, Math.floor((elapsed / duration) * 100));
+      setProgress(nextProgress);
+
+      if (nextProgress < 100) {
+        frameId = requestAnimationFrame(animateProgress);
+        return;
+      }
+
+      exitTimer = setTimeout(() => {
+        if (cancelled) return;
+        setExiting(true);
+
+        finishTimer = setTimeout(() => {
+          if (cancelled) return;
+
           try {
             localStorage.setItem(STORAGE_KEY, "true");
           } catch {
-            // O preloader continua funcionando sem armazenamento.
+            // The intro still completes without storage.
           }
 
-          // Revela o conteúdo somente depois da animação.
           revealSite();
           setVisible(false);
-        },
-      });
+        }, reducedMotion ? 50 : EXIT_DURATION);
+      }, reducedMotion ? 0 : 200);
+    };
 
-      timeline.to(counter, {
-        value: 100,
-        duration: reducedMotion ? 0.15 : 2.4,
-        ease: "power2.inOut",
-        onUpdate: () => {
-          const value = Math.round(counter.value);
+    frameId = requestAnimationFrame(animateProgress);
 
-          if (number) {
-            number.textContent = String(value).padStart(2, "0");
-          }
-
-          if (progressBar) {
-            progressBar.style.transform = `scaleX(${value / 100})`;
-          }
-
-          setProgress(value);
-        },
-      });
-
-      timeline.to(
-        overlay,
-        {
-          yPercent: -100,
-          duration: reducedMotion ? 0.1 : 0.85,
-          ease: "power4.inOut",
-        },
-        "+=0.15"
-      );
-    }, overlay);
-
-    return () => ctx.revert();
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(frameId);
+      if (exitTimer) clearTimeout(exitTimer);
+      if (finishTimer) clearTimeout(finishTimer);
+    };
   }, []);
 
   if (!visible) return null;
@@ -107,11 +95,18 @@ export default function Preloader() {
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-[99999] flex h-dvh w-full flex-col items-center justify-center overflow-hidden bg-[#080808] px-6 text-[#8CFF00]"
       role="status"
+      aria-live="polite"
       aria-label={`Carregando experiência Saint Lovers: ${progress}%`}
+      className="fixed inset-0 z-2147483647 flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#080808] px-6 text-[#8CFF00]"
+      style={{
+        transform: exiting ? "translateY(-100%)" : "translateY(0)",
+        transition: exiting
+          ? `transform ${EXIT_DURATION}ms cubic-bezier(0.77, 0, 0.175, 1)`
+          : "none",
+        willChange: "transform",
+      }}
     >
-      {/* Textura sutil de fundo */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 opacity-[0.12]"
@@ -137,17 +132,17 @@ export default function Preloader() {
             </span>
 
             <span className="font-mono text-sm tabular-nums text-[#8CFF00]">
-              <span ref={numberRef}>
-                {String(progress).padStart(2, "0")}
-              </span>
-              <span>%</span>
+              {String(progress).padStart(2, "0")}%
             </span>
           </div>
 
           <div className="h-px w-full overflow-hidden bg-[#302A24]">
             <div
-              ref={progressRef}
-              className="h-full w-full origin-left scale-x-0 bg-[#B18A58]"
+              className="h-full bg-[#8CFF00]"
+              style={{
+                width: `${progress}%`,
+                transition: "width 35ms linear",
+              }}
             />
           </div>
         </div>
