@@ -1,7 +1,9 @@
+
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import Preloader from "./components/Preloader";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Preloader from "./components/Preloader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,14 +20,21 @@ export const metadata: Metadata = {
   description: "Love Hard by Saint Aiyra",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: ReactNode }>) {
   return (
     <html
       lang="pt-BR"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col"><Preloader />
-{children}</body>
+      <body className="flex min-h-full flex-col">
+        <Preloader />
+
+        <div id="site-content" className="invisible">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }

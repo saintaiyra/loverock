@@ -7,49 +7,64 @@ import gsap from "gsap";
 const STORAGE_KEY = "saint-lovers-preloader-seen";
 
 export default function Preloader() {
-  const [visible, setVisible] = useState(false);
+  // Visível no HTML inicial para cobrir a página antes da hidratação.
+  const [visible, setVisible] = useState(true);
   const [progress, setProgress] = useState(0);
 
   const overlayRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const numberRef = useRef<HTMLSpanElement>(null);
 
-  // Verifica se o visitante já viu a introdução.
   useEffect(() => {
-    try {
-      
-    } catch {
-      // Se o armazenamento estiver indisponível,
-      // o preloader continua funcionando nesta visita.
-    }
-
-    setVisible(true);
-  }, []);
-
-  // Executa a animação somente quando o preloader aparece.
-  useEffect(() => {
-    if (!visible || !overlayRef.current) return;
-
     const overlay = overlayRef.current;
     const progressBar = progressRef.current;
     const number = numberRef.current;
+    const siteContent = document.getElementById("site-content");
+
+    const revealSite = () => {
+      siteContent?.classList.remove("invisible");
+    };
+
+    // Não repetir a introdução se ela já foi concluída.
+    try {
+      if (localStorage.getItem(STORAGE_KEY) === "true") {
+        revealSite();
+        setVisible(false);
+        return;
+      }
+    } catch {
+      // Se o armazenamento estiver indisponível,
+      // executa normalmente nesta visita.
+    }
+
+    if (!overlay) {
+      revealSite();
+      setVisible(false);
+      return;
+    }
 
     const counter = { value: 0 };
+
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
     const ctx = gsap.context(() => {
-      gsap.set(overlay, { yPercent: 0, autoAlpha: 1 });
+      gsap.set(overlay, {
+        yPercent: 0,
+        autoAlpha: 1,
+      });
 
       const timeline = gsap.timeline({
         onComplete: () => {
           try {
-            
+            localStorage.setItem(STORAGE_KEY, "true");
           } catch {
-            // Sem armazenamento, poderá aparecer novamente.
+            // O preloader continua funcionando sem armazenamento.
           }
 
+          // Revela o conteúdo somente depois da animação.
+          revealSite();
           setVisible(false);
         },
       });
@@ -61,8 +76,6 @@ export default function Preloader() {
         onUpdate: () => {
           const value = Math.round(counter.value);
 
-          setProgress(value);
-
           if (number) {
             number.textContent = String(value).padStart(2, "0");
           }
@@ -70,6 +83,8 @@ export default function Preloader() {
           if (progressBar) {
             progressBar.style.transform = `scaleX(${value / 100})`;
           }
+
+          setProgress(value);
         },
       });
 
@@ -85,14 +100,14 @@ export default function Preloader() {
     }, overlay);
 
     return () => ctx.revert();
-  }, [visible]);
+  }, []);
 
   if (!visible) return null;
 
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-9999 flex h-dvh w-full flex-col items-center justify-center overflow-hidden bg-[#080808] px-6 text-[#F4F0E9]"
+      className="fixed inset-0 z-[99999] flex h-dvh w-full flex-col items-center justify-center overflow-hidden bg-[#080808] px-6 text-[#8CFF00]"
       role="status"
       aria-label={`Carregando experiência Saint Lovers: ${progress}%`}
     >
@@ -102,12 +117,12 @@ export default function Preloader() {
         className="pointer-events-none absolute inset-0 opacity-[0.12]"
         style={{
           backgroundImage:
-            "radial-gradient(circle at center, #6B5236 0%, transparent 65%)",
+            "radial-gradient(circle at center, #8CFF00 0%, transparent 65%)",
         }}
       />
 
       <div className="relative z-10 flex w-full max-w-md flex-col items-center">
-        <span className="mb-7 text-[9px] uppercase tracking-[0.42em] text-[#B18A58] sm:text-[10px]">
+        <span className="mb-7 text-[9px] uppercase tracking-[0.42em] text-[#8CFF00] sm:text-[10px]">
           Independent Creative Studio
         </span>
 
@@ -117,11 +132,11 @@ export default function Preloader() {
 
         <div className="mt-14 w-full">
           <div className="mb-3 flex items-center justify-between gap-4">
-            <span className="text-[9px] uppercase tracking-[0.2em] text-[#8E8981] sm:text-[10px]">
+            <span className="text-[9px] uppercase tracking-[0.2em] text-[#8CFF00] sm:text-[10px]">
               Initializing experience
             </span>
 
-            <span className="font-mono text-sm tabular-nums text-[#B18A58]">
+            <span className="font-mono text-sm tabular-nums text-[#8CFF00]">
               <span ref={numberRef}>
                 {String(progress).padStart(2, "0")}
               </span>
@@ -137,7 +152,7 @@ export default function Preloader() {
           </div>
         </div>
 
-        <span className="mt-6 text-[8px] uppercase tracking-[0.35em] text-[#77716A] sm:text-[9px]">
+        <span className="mt-6 text-[8px] uppercase tracking-[0.35em] text-[#8CFF00] sm:text-[9px]">
           Design · Sound · Culture
         </span>
       </div>
