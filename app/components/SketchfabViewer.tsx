@@ -1,9 +1,9 @@
 export default function SketchfabViewer() {
   return (
-    <section className="w-full bg-[#8CFF00] px-4 py-40 md:px-10">
+    <section className="w-full bg-[#8CFF00] px-4 py-10 md:px-10">
       <div className="mx-auto max-w-6xl">
         <div className="relative w-full overflow-hidden">
-          <div className="aspect-4/4 w-full">
+          <div className="aspect-3/4 w-full">
             <iframe
               title="Saint-Sculpture"
               src="https://sketchfab.com/models/340bdc2085bf48e081c84bc5666405c7/embed?autospin=1&autostart=1&preload=1&transparent=1&ui_hint=0&ui_theme=dark"
