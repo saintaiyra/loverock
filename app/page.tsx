@@ -10,6 +10,7 @@ import Hero from "./components/Hero";
 import Lovehard from "./components/Lovehard";
 import Sketchbook from "./components/Sketchbook";
 import VogueMagazine from "./components/VogueMagazine";
+import SketchfabViewer from "./components/SketchfabViewer";
 import Spirits from "./components/Spirits";
 import Music from "./components/Music";
 import LogoCarousel from "./components/LogoCarousel";
@@ -40,7 +41,7 @@ export default function Home() {
         </SectionTransitions>
 
 
-        
+        <SketchfabViewer/>
         <LogoCarousel />
         <Spirits />
         <LogoCarousel />
