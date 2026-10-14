@@ -41,7 +41,7 @@ className="relative block w-[90%] cursor-pointer focus-visible:outline-2 focus-v
 
           {/* Caderno aberto */}
           <Image
-            src="/sketchbook/for the world.png"
+            src="/sketchbook/for the worldpt2.png"
             alt="Sketchbook aberto com colagens, fotografias e poema"
             width={1536}
             height={1024}
