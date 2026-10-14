@@ -1,6 +1,6 @@
 export default function SketchfabViewer() {
   return (
-    <section className="w-full bg-[#8CFF00] px-4 py-10 md:px-10">
+    <section className="sl-transition w-full bg-[#8CFF00] px-4 py-10 md:px-10">
       <div className="mx-auto max-w-6xl">
         <div className="relative w-full overflow-hidden">
           <div className="aspect-3/4 w-full">

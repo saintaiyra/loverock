@@ -37,11 +37,11 @@ export default function Home() {
         <Hero />
         <Lovehard />
         <Sketchbook/>
-        <VogueMagazine/>
-        </SectionTransitions>
-
-
         <SketchfabViewer/>
+       </SectionTransitions>
+
+
+        <VogueMagazine/>
         <LogoCarousel />
         <Spirits />
         <LogoCarousel />

@@ -4,7 +4,7 @@ export default function Lovehard() {
     <section
       className="
         sl-transition relative isolate
-        min-h-screen min-h-[100svh]
+        min-h-screen
         w-full overflow-hidden bg-black
       "
     >
@@ -28,7 +28,7 @@ export default function Lovehard() {
       {/* Overlay cinematográfico */}
       <div
         className="
-          absolute inset-0 z-[1]
+          absolute inset-0 z-1
           bg-black/30
           pointer-events-none
         "
@@ -39,7 +39,7 @@ export default function Lovehard() {
       <div
         className="
           relative z-10
-          flex min-h-screen min-h-[100svh]
+          flex min-h-screen
           w-full items-center justify-center
           px-4 py-6
         "
@@ -47,10 +47,10 @@ export default function Lovehard() {
         <img
           className="
             block h-auto
-            w-[140px] max-w-full
-            sm:w-[160px]
-            md:w-[180px]
-            lg:w-[200px]
+            w-35 max-w-full
+            sm:w-40
+            md:w-45
+            lg:w-50
             object-contain
           "
           src="/love%20hard/Love%20Hard.png"
