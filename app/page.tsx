@@ -38,10 +38,10 @@ export default function Home() {
         <Lovehard />
         <Sketchbook/>
         <SketchfabViewer/>
+        <VogueMagazine/>
        </SectionTransitions>
 
 
-        <VogueMagazine/>
         <LogoCarousel />
         <Spirits />
         <LogoCarousel />
