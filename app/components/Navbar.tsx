@@ -10,7 +10,7 @@ interface NavbarProps {
 
 export default function Navbar({ isOpen, setIsOpen }: NavbarProps) {
   return (
-    <nav className="absolute top-0 left-0 z-110 flex w-full items-start justify-between px-6 py-2 md:px-2">
+    <nav className="absolute top-0 left-0 z-110 flex w-full items-start justify-between px-6 py-1 md:px-2">
       {/* Logo — canto superior esquerdo */}
       <div>
         <img

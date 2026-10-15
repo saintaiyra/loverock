@@ -2,17 +2,16 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import * as pdfjsLib from "pdfjs-dist";
+import type { PDFDocumentProxy, PDFDocumentLoadingTask } from "pdfjs-dist";
 
 const PDF_URL = "/vogue/australia.pdf";
 const WORKER_URL = "/vogue/pdf.worker.min.mjs";
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = WORKER_URL;
 
 export default function VogueMagazine() {
   const viewerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const pdfRef = useRef<pdfjsLib.PDFDocumentProxy | null>(null);
+  const pdfRef = useRef<PDFDocumentProxy | null>(null);
   const renderTaskRef = useRef<any>(null);
 
   const [page, setPage] = useState(1);
@@ -21,23 +20,31 @@ export default function VogueMagazine() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Carrega o PDF.
+  // Carrega o PDF.js somente no navegador para evitar sua avaliação no servidor.
   useEffect(() => {
     let active = true;
+    let loadingTask: PDFDocumentLoadingTask | null = null;
 
-    const loadingTask = pdfjsLib.getDocument({
-      url: PDF_URL,
-    });
+    async function loadPdf() {
+      try {
+        const pdfjsLib = await import("pdfjs-dist");
 
-    loadingTask.promise
-      .then((pdf) => {
+        if (!active) return;
+
+        pdfjsLib.GlobalWorkerOptions.workerSrc = WORKER_URL;
+
+        loadingTask = pdfjsLib.getDocument({
+          url: PDF_URL,
+        });
+
+        const pdf = await loadingTask.promise;
+
         if (!active) return;
 
         pdfRef.current = pdf;
         setTotalPages(pdf.numPages);
         setLoading(false);
-      })
-      .catch((err: unknown) => {
+      } catch (err: unknown) {
         if (!active) return;
 
         console.error("Erro ao carregar o PDF:", err);
@@ -45,12 +52,17 @@ export default function VogueMagazine() {
           "Não foi possível carregar a revista. Verifique o PDF e o worker."
         );
         setLoading(false);
-      });
+      }
+    }
+
+    void loadPdf();
 
     return () => {
       active = false;
       pdfRef.current = null;
-      void loadingTask.destroy();
+      if (loadingTask) {
+        void loadingTask.destroy();
+      }
     };
   }, []);
 
@@ -86,7 +98,7 @@ export default function VogueMagazine() {
     }
 
     // Referências verificadas e não nulas.
-    const documentProxy: pdfjsLib.PDFDocumentProxy = pdf;
+    const documentProxy: PDFDocumentProxy = pdf;
     const canvas: HTMLCanvasElement = canvasElement;
 
     let cancelled = false;

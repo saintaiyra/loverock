@@ -1,3 +1,4 @@
+
 export default function Hero() {
   return (
     <section className="sl-transition relative isolate h-screen w-full overflow-hidden bg-[#8CFF00]">
@@ -33,7 +34,6 @@ export default function Hero() {
   alt="Retrato editorial com óculos espelhados"
 />
 ```
-
 
       {/* Texto poético — inferior esquerdo */}
       <img
