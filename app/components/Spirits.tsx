@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -29,7 +28,7 @@ export default function Spirits() {
       const distance = cards.reduce(
         (total, card) =>
           total + (card as HTMLElement).getBoundingClientRect().width,
-        0
+        0,
       );
 
       if (!distance) return;
@@ -55,15 +54,51 @@ export default function Spirits() {
     };
   }, []);
 
+  useEffect(() => {
+    const section = sectionRef.current;
+
+    if (!section) return;
+
+    const videoElements = section.querySelectorAll("video");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target as HTMLVideoElement;
+
+          if (entry.isIntersecting) {
+            video.play().catch(() => {
+              // O navegador pode bloquear a reprodução.
+            });
+          } else {
+            video.pause();
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+      },
+    );
+
+    videoElements.forEach((video) => {
+      observer.observe(video);
+    });
+
+    return () => {
+      observer.disconnect();
+
+      videoElements.forEach((video) => {
+        video.pause();
+      });
+    };
+  }, []);
+
   return (
     <section
       ref={sectionRef}
       className="relative w-full overflow-hidden bg-black"
     >
-      <div
-        ref={trackRef}
-        className="flex w-full flex-nowrap gap-0"
-      >
+      <div ref={trackRef} className="flex w-full flex-nowrap gap-0">
         {[...videos, ...videos].map((video, index) => (
           <div
             key={`${video.name}-${index}`}
@@ -75,7 +110,7 @@ export default function Spirits() {
               muted
               loop
               playsInline
-              preload="auto"
+              preload="metadata"
               onError={() =>
                 console.error("Não foi possível carregar:", video.src)
               }

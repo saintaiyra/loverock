@@ -39,14 +39,14 @@ export default function LogoCarousel() {
             key={group}
             ref={index === 0 ? groupRef : undefined}
             aria-hidden={index === 1}
-            className="flex shrink-0 items-center gap-16 pr-16"
+            className="flex shrink-0 items-center gap-2 pr-2"
           >
             {logos.map((logo) => (
               <img
                 key={logo}
                 src="/navbar icons/SL.png"
                 alt={index === 0 ? "Saint Lovers" : ""}
-                className="h-8 w-auto shrink-0 object-contain"
+                className="h-6 w-20 shrink-0 object-contain"
               />
             ))}
           </div>
