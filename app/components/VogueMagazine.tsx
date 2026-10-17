@@ -4,7 +4,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { PDFDocumentProxy, PDFDocumentLoadingTask } from "pdfjs-dist";
 
-const PDF_URL = "/vogue/2006.10 - Playboy Germany - Jenny Winkler.pdf";
+const PDF_URL = "/vogue/2005.02 - Playboy Germany -  Isabell Etz, Beatrice Block, Mandy Gtze.pdf";
 const WORKER_URL = "/vogue/pdf.worker.min.mjs";
 
 

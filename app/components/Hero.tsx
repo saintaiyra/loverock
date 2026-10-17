@@ -12,7 +12,7 @@ export default function Hero() {
 
       {/* Aiyra — lado direito */}
       <img
-        className="absolute right-[1%] top-1/2 z-30 h-auto w-[36%] -translate-y-1/2 object-contain"
+        className="absolute right-[1%] top-1/2 z-30 h-auto w-[36%] -translate-y-1 object-contain"
         src="/hero png/Aiyra.png"
         alt="Aiyra"
       />
