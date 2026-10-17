@@ -1,23 +1,7 @@
-
 export default function Hero() {
   return (
     <section className="sl-transition relative isolate h-screen w-full overflow-hidden bg-[#8CFF00]">
 
-      {/* Vídeo de líquido preto transparente */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="metadata"
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-10 h-full w-full object-cover"
-      >
-        <source
-          src="/videos/black-drips-alpha-fixed.webm"
-          type="video/webm"
-        />
-      </video>
 
       {/* Saint — lado esquerdo */}
       <img
