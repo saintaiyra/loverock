@@ -3,37 +3,50 @@ export default function Hero() {
   return (
     <section className="sl-transition relative isolate h-screen w-full overflow-hidden bg-[#8CFF00]">
 
+      {/* Vídeo de líquido preto transparente */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-10 h-full w-full object-cover"
+      >
+        <source
+          src="/videos/black-drips-alpha-fixed.webm"
+          type="video/webm"
+        />
+      </video>
+
       {/* Saint — lado esquerdo */}
       <img
-        className="absolute left-[1%] top-1/2 z-10 h-auto w-[36%] -translate-y-1/2 object-contain"
+        className="absolute left-[1%] top-1/2 z-20 h-auto w-[36%] -translate-y-1/2 object-contain"
         src="/hero png/Saint.png"
         alt="Saint"
       />
 
       {/* Aiyra — lado direito */}
       <img
-        className="absolute right-[1%] top-1/2 z-200 h-auto w-[36%] -translate-y-2 object-contain"
+        className="absolute right-[1%] top-1/2 z-30 h-auto w-[36%] -translate-y-1/2 object-contain"
         src="/hero png/Aiyra.png"
         alt="Aiyra"
       />
 
-      
-{/* Retrato — centro */}
-<img
-  className="
-    absolute left-1/2 top-1/2 z-20
-    h-[90%] w-auto max-w-none
-    -translate-x-1/2 translate-y-[-42%]
-    object-contain object-bottom
-
-    max-sm:top-[30%]
-    max-sm:h-[78%]
-    max-sm:translate-y-[-5%]
-  "
-  src="/hero png/Face Cardpt3.png"
-  alt="Retrato editorial com óculos espelhados"
-/>
-```
+      {/* Retrato — centro */}
+      <img
+        className="
+          absolute left-1/2 top-1/2 z-20
+          h-[90%] w-auto max-w-none
+          -translate-x-1/2 translate-y-[-42%]
+          object-contain object-bottom
+          max-sm:top-[30%]
+          max-sm:h-[78%]
+          max-sm:translate-y-[-5%]
+        "
+        src="/hero png/Face Cardpt3.png"
+        alt="Retrato editorial com óculos espelhados"
+      />
 
       {/* Texto poético — inferior esquerdo */}
       <img
@@ -43,10 +56,11 @@ export default function Hero() {
       />
 
       {/* Localização — inferior direito */}
-      <img 
-      className="absolute bottom-[4%] right-[1%] z-40 h-10 w-[10%] object-contain"
-      src="/hero png/BURITAMA; SP.png" alt=""/>
-
+      <img
+        className="absolute bottom-[4%] right-[1%] z-40 h-10 w-[10%] object-contain"
+        src="/hero png/BURITAMA; SP.png"
+        alt="Buritama, SP"
+      />
     </section>
   );
 }

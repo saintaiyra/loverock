@@ -4,7 +4,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { PDFDocumentProxy, PDFDocumentLoadingTask } from "pdfjs-dist";
 
-const PDF_URL = "/vogue/australia.pdf";
+const PDF_URL = "/vogue/2006.10 - Playboy Germany - Jenny Winkler.pdf";
 const WORKER_URL = "/vogue/pdf.worker.min.mjs";
 
 
@@ -250,11 +250,11 @@ export default function VogueMagazine() {
           </p>
 
           <h2 className="text-3xl text-black font-light uppercase tracking-[0.12em] md:text-5xl">
-            Vogue Australia
+           Playboi "Saint"
           </h2>
 
           <p className="mt-3 text-sm tracking-wider text-black">
-            April 2023 Edition
+            Special Edition
           </p>
         </header>
 
